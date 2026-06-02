@@ -16,39 +16,44 @@ class MaintenanceScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Bakım ve Onarım'),
       ),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: tasks.length,
-        itemBuilder: (context, index) {
-          final task = tasks[index];
-          return Card(
-            margin: const EdgeInsets.only(bottom: 12),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            elevation: 1,
-            child: ListTile(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              leading: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: task['color'].withOpacity(0.1),
-                  shape: BoxShape.circle,
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 800), // Webde listenin ortalanması için
+          child: ListView.builder(
+            padding: const EdgeInsets.all(16),
+            itemCount: tasks.length,
+            itemBuilder: (context, index) {
+              final task = tasks[index];
+              return Card(
+                margin: const EdgeInsets.only(bottom: 12),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                elevation: 1,
+                child: ListTile(
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  leading: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: task['color'].withOpacity(0.1),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(Icons.build_outlined, color: task['color']),
+                  ),
+                  title: Text(task['title'], style: const TextStyle(fontWeight: FontWeight.bold)),
+                  subtitle: Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Text('Durum: ${task['status']}', style: TextStyle(color: task['color'], fontWeight: FontWeight.w600)),
+                  ),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+                  onTap: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('${task['title']} detayı açılıyor...')),
+                    );
+                  },
                 ),
-                child: Icon(Icons.build_outlined, color: task['color']),
-              ),
-              title: Text(task['title'], style: const TextStyle(fontWeight: FontWeight.bold)),
-              subtitle: Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Text('Durum: ${task['status']}', style: TextStyle(color: task['color'], fontWeight: FontWeight.w600)),
-              ),
-              trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
-              onTap: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('${task['title']} detayı açılıyor...')),
-                );
-              },
-            ),
-          );
-        },
+              );
+            },
+          ),
+        ),
       ),
     );
   }

@@ -16,33 +16,38 @@ class BookingScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Ortak Alan Rezervasyonu'),
       ),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: areas.length,
-        itemBuilder: (context, index) {
-          final area = areas[index];
-          return Card(
-            margin: const EdgeInsets.only(bottom: 12),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            elevation: 1,
-            child: ListTile(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              leading: Icon(area['icon'], size: 36, color: Theme.of(context).primaryColor),
-              title: Text(area['title'], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-              trailing: ElevatedButton(
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('${area['title']} için randevu ekranı açılıyor...')),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 800), // Webde listeyi ortalamak için
+          child: ListView.builder(
+            padding: const EdgeInsets.all(16),
+            itemCount: areas.length,
+            itemBuilder: (context, index) {
+              final area = areas[index];
+              return Card(
+                margin: const EdgeInsets.only(bottom: 12),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                elevation: 1,
+                child: ListTile(
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  leading: Icon(area['icon'], size: 36, color: Theme.of(context).primaryColor),
+                  title: Text(area['title'], style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                  trailing: ElevatedButton(
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('${area['title']} için randevu ekranı açılıyor...')),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    ),
+                    child: const Text('Randevu Al'),
+                  ),
                 ),
-                child: const Text('Randevu Al'),
-              ),
-            ),
-          );
-        },
+              );
+            },
+          ),
+        ),
       ),
     );
   }
