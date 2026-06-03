@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'menu_screen.dart';
 import 'resident_login_screen.dart';
+import 'staff_login_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -73,10 +74,10 @@ class LoginScreen extends StatelessWidget {
                   // Alt Kısım: Personel Girişi Butonu
                   TextButton(
                     onPressed: () {
-                      Navigator.pushReplacement(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const MenuScreen(role: 'Staff')),
+                            builder: (context) => const StaffLoginScreen()),
                       );
                     },
                     style: TextButton.styleFrom(

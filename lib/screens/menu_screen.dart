@@ -60,7 +60,7 @@ class MenuScreen extends StatelessWidget {
       // Staff (Personel) Menüsü
       menuItems = [
         {
-          'title': 'İş Emirlerim (Bakım)',
+          'title': 'Arıza ve Bildirimler',
           'icon': Icons.build_outlined,
           'page': const MaintenanceScreen(),
         },

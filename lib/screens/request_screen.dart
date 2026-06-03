@@ -9,6 +9,7 @@ class RequestScreen extends StatefulWidget {
 
 class _RequestScreenState extends State<RequestScreen> {
   String? _selectedCategory;
+  bool _isUrgent = false;
   final TextEditingController _descriptionController = TextEditingController();
   bool _hasImage = false; // Görsel eklendiğini simüle etmek için
 
@@ -29,11 +30,12 @@ class _RequestScreenState extends State<RequestScreen> {
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 600), // Formun webde çok uzamaması için
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
                 Text(
                   'Lütfen probleminizi veya talebinizi aşağıdan detaylandırın.',
                   style: TextStyle(
@@ -130,31 +132,58 @@ class _RequestScreenState extends State<RequestScreen> {
                   ),
 
                 const SizedBox(height: 24),
+                // Çok Acil Toggle Kutusu
+                Container(
+                  decoration: BoxDecoration(
+                    color: _isUrgent ? Colors.red.withOpacity(0.1) : Theme.of(context).cardColor,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: _isUrgent ? Colors.red.shade400 : Colors.grey.shade300,
+                    ),
+                  ),
+                  child: SwitchListTile(
+                    title: const Text(
+                      'Çok Acil',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: const Text('Örn: Daire su basması, asansörde mahsur kalma'),
+                    activeColor: Colors.red,
+                    value: _isUrgent,
+                    onChanged: (bool value) {
+                      setState(() {
+                        _isUrgent = value;
+                      });
+                    },
+                  ),
+                ),
+                if (_isUrgent)
+                  const Padding(
+                    padding: EdgeInsets.only(top: 12.0, left: 4, right: 4),
+                    child: Text(
+                      '⚠️ Lütfen asılsız ihbar yapmayınız. Gerçek dışı acil çağrılar teknik ekibin diğer işleyişlerini aksatmaktadır.',
+                      style: TextStyle(color: Colors.red, fontSize: 13, fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                const SizedBox(height: 24),
                 ElevatedButton(
                   onPressed: () {
-                    if (_selectedCategory != null && _descriptionController.text.isNotEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Talebiniz başarıyla iletildi.')),
-                      );
-                      Navigator.pop(context);
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Lütfen tüm alanları doldurun.')),
-                      );
-                    }
+                    // TODO: Form validation & API call
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Talebiniz başarıyla yönetime iletildi.')),
+                    );
+                    Navigator.pop(context);
                   },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                   ),
-                  child: const Text('Gönder', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  child: const Text('Talebi Gönder', style: TextStyle(fontSize: 16)),
                 ),
               ],
             ),
           ),
         ),
+      ),
       ),
     );
   }
