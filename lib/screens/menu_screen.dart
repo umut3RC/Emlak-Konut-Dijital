@@ -43,7 +43,7 @@ class MenuScreen extends StatelessWidget {
         {
           'title': 'Duyuru ve İletişim',
           'icon': Icons.campaign_outlined,
-          'page': const AnnouncementScreen(),
+          'page': const AnnouncementScreen(role: 'Resident'),
         },
         {
           'title': 'Misafir ve Güvenlik',
@@ -65,6 +65,11 @@ class MenuScreen extends StatelessWidget {
           'page': const MaintenanceScreen(),
         },
         {
+          'title': 'Yeni Arıza Kaydı Oluştur',
+          'icon': Icons.assignment_add,
+          'page': const RequestScreen(),
+        },
+        {
           'title': 'QR Kod Okuyucu',
           'icon': Icons.qr_code_scanner,
           'page': const SecurityScreen(),
@@ -72,7 +77,7 @@ class MenuScreen extends StatelessWidget {
         {
           'title': 'Personel Duyuruları',
           'icon': Icons.campaign_outlined,
-          'page': const AnnouncementScreen(),
+          'page': const AnnouncementScreen(role: 'Staff'),
         },
         {
           'title': 'Vardiya Çizelgesi',
