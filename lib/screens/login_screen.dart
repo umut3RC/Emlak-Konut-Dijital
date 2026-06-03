@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'menu_screen.dart';
+import 'resident_login_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -24,7 +25,9 @@ class LoginScreen extends StatelessWidget {
                       Icon(
                         Icons.maps_home_work_outlined,
                         size: 80,
-                        color: Theme.of(context).primaryColor,
+                        color: Theme.of(context).brightness == Brightness.dark 
+                            ? Colors.blue.shade300 
+                            : Theme.of(context).primaryColor,
                       ),
                       const SizedBox(height: 16),
                       const Text(
@@ -32,15 +35,14 @@ class LoginScreen extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black87,
                         ),
                       ),
                       const SizedBox(height: 8),
-                      const Text(
+                      Text(
                         'Yaşam Deneyimi Platformu',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.black54,
+                          color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.7),
                         ),
                       ),
                     ],
@@ -49,10 +51,10 @@ class LoginScreen extends StatelessWidget {
                   // Orta Kısım: Konut Sahibi Butonu
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.pushReplacement(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const MenuScreen(role: 'Resident')),
+                            builder: (context) => const ResidentLoginScreen()),
                       );
                     },
                     style: ElevatedButton.styleFrom(

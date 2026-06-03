@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../main.dart';
 import 'login_screen.dart';
 import 'request_screen.dart';
 import 'maintenance_screen.dart';
@@ -15,43 +16,71 @@ class MenuScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> menuItems = [
-      {
-        'title': 'Talep / Arıza Bildir', 
-        'icon': Icons.report_problem_outlined,
-        'page': const RequestScreen(),
-      },
-      {
-        'title': 'Bakım-Onarım', 
-        'icon': Icons.build_outlined,
-        'page': const MaintenanceScreen(),
-      },
-      {
-        'title': 'Ortak Alan Kullanımı', 
-        'icon': Icons.event_available_outlined,
-        'page': const BookingScreen(),
-      },
-      {
-        'title': 'Aidat ve Ödemeler', 
-        'icon': Icons.payment_outlined, 
-        'page': const PaymentScreen(),
-      },
-      {
-        'title': 'Duyuru ve İletişim', 
-        'icon': Icons.campaign_outlined, 
-        'page': const AnnouncementScreen(),
-      },
-      {
-        'title': 'Misafir ve Güvenlik', 
-        'icon': Icons.security_outlined, 
-        'page': const SecurityScreen(),
-      },
-      {
-        'title': 'Memnuniyet Anketi', 
-        'icon': Icons.star_border_outlined, 
-        'page': const SurveyScreen(),
-      },
-    ];
+    List<Map<String, dynamic>> menuItems = [];
+
+    if (role == 'Resident') {
+      menuItems = [
+        {
+          'title': 'Talep / Arıza Bildir',
+          'icon': Icons.report_problem_outlined,
+          'page': const RequestScreen(),
+        },
+        {
+          'title': 'Bakım-Onarım',
+          'icon': Icons.build_outlined,
+          'page': const MaintenanceScreen(),
+        },
+        {
+          'title': 'Ortak Alan Kullanımı',
+          'icon': Icons.event_available_outlined,
+          'page': const BookingScreen(),
+        },
+        {
+          'title': 'Aidat ve Ödemeler',
+          'icon': Icons.payment_outlined,
+          'page': const PaymentScreen(),
+        },
+        {
+          'title': 'Duyuru ve İletişim',
+          'icon': Icons.campaign_outlined,
+          'page': const AnnouncementScreen(),
+        },
+        {
+          'title': 'Misafir ve Güvenlik',
+          'icon': Icons.security_outlined,
+          'page': const SecurityScreen(),
+        },
+        {
+          'title': 'Memnuniyet Anketi',
+          'icon': Icons.star_border_outlined,
+          'page': const SurveyScreen(),
+        },
+      ];
+    } else {
+      // Staff (Personel) Menüsü
+      menuItems = [
+        {
+          'title': 'İş Emirlerim (Bakım)',
+          'icon': Icons.build_outlined,
+          'page': const MaintenanceScreen(),
+        },
+        {
+          'title': 'QR Kod Okuyucu',
+          'icon': Icons.qr_code_scanner,
+          'page': const SecurityScreen(),
+        },
+        {
+          'title': 'Personel Duyuruları',
+          'icon': Icons.campaign_outlined,
+          'page': const AnnouncementScreen(),
+        },
+        {
+          'title': 'Vardiya Çizelgesi',
+          'icon': Icons.calendar_month_outlined,
+          'page': null, // Şimdilik boş
+        },
+      ];
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -66,7 +95,7 @@ class MenuScreen extends StatelessWidget {
               );
             },
             tooltip: 'Çıkış Yap',
-          )
+          ),
         ],
       ),
       body: LayoutBuilder(
@@ -98,18 +127,23 @@ class MenuScreen extends StatelessWidget {
                   return Card(
                     elevation: 2,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                    color: Colors.white,
-                    surfaceTintColor: Colors.white,
+                    // Hardcoded white colors removed so it adapts to dark mode automatically
                     child: InkWell(
                       onTap: () {
                         if (item['page'] != null) {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => item['page'] as Widget),
+                            MaterialPageRoute(
+                              builder: (context) => item['page'] as Widget,
+                            ),
                           );
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('${item['title']} yapım aşamasında...')),
+                            SnackBar(
+                              content: Text(
+                                '${item['title']} yapım aşamasında...',
+                              ),
+                            ),
                           );
                         }
                       },
@@ -118,17 +152,21 @@ class MenuScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
-                            item['icon'], 
-                            size: 48, 
-                            color: Theme.of(context).primaryColor
+                            item['icon'],
+                            size: 48,
+                            color: Theme.of(context).primaryColor,
                           ),
                           const SizedBox(height: 12),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8.0,
+                            ),
                             child: Text(
                               item['title'],
                               textAlign: TextAlign.center,
-                              style: const TextStyle(fontWeight: FontWeight.w600),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                           ),
                         ],
@@ -139,7 +177,7 @@ class MenuScreen extends StatelessWidget {
               ),
             ),
           );
-        }
+        },
       ),
     );
   }

@@ -56,7 +56,7 @@ class AnnouncementScreen extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 18, 
                                 fontWeight: FontWeight.bold,
-                                color: ann['isImportant'] ? Colors.red : Colors.black87,
+                                color: ann['isImportant'] ? Colors.red : null,
                               ),
                             ),
                           ),

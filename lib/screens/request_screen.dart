@@ -34,9 +34,12 @@ class _RequestScreenState extends State<RequestScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Text(
+                Text(
                   'Lütfen probleminizi veya talebinizi aşağıdan detaylandırın.',
-                  style: TextStyle(fontSize: 16, color: Colors.black54),
+                  style: TextStyle(
+                    fontSize: 16, 
+                    color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.7),
+                  ),
                 ),
                 const SizedBox(height: 24),
                 DropdownButtonFormField<String>(
